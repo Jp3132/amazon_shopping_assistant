@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import Runnable, RunnableConfig
-from assistant_tools import search_products
+from assistant_tools import search_products,  add_to_cart, remove_from_cart, view_cart,checkout,get_payment_options,get_order_status,get_delivery_time
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph.message import AnyMessage, add_messages
@@ -17,7 +17,8 @@ from langgraph.prebuilt import tools_condition
 from utils import create_tool_node_with_fallback, _print_event
 import uuid
 import json
-
+from langgraph.prebuilt import tools_condition
+cart = {}
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -113,7 +114,7 @@ class Assistant:
 llm = ChatGroq(
     model="llama-3.1-8b-instant",  # Specify the model name
     temperature=1,                     # Set the desired temperature
-    max_tokens=7999,                   # Define the maximum number of tokens
+    max_tokens=7999,                # Define the maximum number of tokens
     timeout=10,                        # Set a timeout in seconds
     max_retries=2                      # Number of retries in case of errors
 )
@@ -122,20 +123,28 @@ llm = ChatGroq(
 primary_assistant_prompt = ChatPromptTemplate.from_messages(
     [
         (
-            "system",
-            "You are a helpful Amazon shopping assistant."
-            " Use the provided tools to search for products and other information to assist the user's queries. "
-            "When searching, be persistent. Expand your query bounds if the first search returns no results. "
-            "If a search comes up empty, expand your search before giving up."
-            "\n\nCurrent user:\n<User>\n{user_info}\n</User>"
-            "\nCurrent time: {time}.",
-        ),
-        ("placeholder", "{messages}"),
+    "system",
+    "You are a helpful and proactive Amazon shopping assistant."
+    " Your main tasks are to answer product-related queries, suggest related or alternative products, manage the shopping cart, and assist with checkout and order inquiries."
+    "\n\nProduct Search and Recommendations:\n"
+    "  - Answer questions about product specifications, price, and availability.\n"
+    "  - Provide recommendations for related or alternative products based on user interests.\n"
+    "  - If an initial search doesn’t yield results, try expanding the query to help the user find what they need.\n"
+    "\nCart Management:\n"
+    "  - Allow users to add or remove items from their cart during the conversation.\n"
+    "  - Confirm each cart action and provide the user with updates on the items in their cart.\n"
+    "\nOrder and Purchase Queries:\n"
+    "  - Respond to questions about checkout, estimated delivery times, payment options, and order statuses.\n"
+    "  - Guide users through the checkout process, making sure they understand each step.\n"
+    "\n\nCurrent user:\n<User>\n{user_info}\n</User>"
+    "\nCurrent time: {time}.",
+),
+("placeholder", "{messages}"),
     ]
 ).partial(time=datetime.now)
 
 # Define the tools available to the assistant
-tools = [search_products]
+tools = [search_products,  add_to_cart, remove_from_cart, view_cart, checkout, get_payment_options, get_order_status, get_delivery_time]
 
 # Bind tools to the LLM and combine with the prompt
 assistant_runnable = primary_assistant_prompt | llm.bind_tools(tools)

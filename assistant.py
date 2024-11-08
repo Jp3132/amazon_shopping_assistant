@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import Runnable, RunnableConfig
-from assistant_tools import search_products
+from assistant_tools import search_products, add_to_cart, remove_from_cart, view_cart
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -65,6 +65,29 @@ class State(TypedDict):
 
 
 
+# class Assistant:
+#     def __init__(self, runnable: Runnable):
+#         self.runnable = runnable
+
+#     def __call__(self, state: State, config: RunnableConfig):
+#         while True:
+#             configuration = config.get("configurable", {})
+#             user_id = configuration.get("user_id", None)
+#             state = {**state, "user_info": user_id}
+#             result = self.runnable.invoke(state)
+#             # If the LLM happens to return an empty response, we will re-prompt it
+#             # for an actual response.
+#             if not result.tool_calls and (
+#                 not result.content
+#                 or isinstance(result.content, list)
+#                 and not result.content[0].get("text")
+#             ):
+#                 messages = state["messages"] + [("user", "Respond with a real output.")]
+#                 state = {**state, "messages": messages}
+#             else:
+#                 break
+#         return {"messages": result}
+import json
 class Assistant:
     def __init__(self, runnable: Runnable):
         self.runnable = runnable
@@ -75,12 +98,35 @@ class Assistant:
             user_id = configuration.get("user_id", None)
             state = {**state, "user_info": user_id}
             result = self.runnable.invoke(state)
-            # If the LLM happens to return an empty response, we will re-prompt it
-            # for an actual response.
+
+            # Ensure that result.content is a string
+            if isinstance(result.content, list):
+                # If it's a list, concatenate the text parts
+                concatenated_content = ""
+                for item in result.content:
+                    text = item.get("text", "")
+                    if not isinstance(text, str):
+                        text = str(text)
+                    concatenated_content += text
+                result.content = concatenated_content
+            elif not isinstance(result.content, str):
+                # Convert non-string content to string
+                result.content = str(result.content)
+
+            # Ensure that all tool_calls have string content
+            if result.tool_calls:
+                for call in result.tool_calls:
+                    if not isinstance(call['content'], str):
+                        call['content'] = json.dumps(call['content'])
+
+            # If the LLM returns tool calls but has content, assume it's a valid response
+            if result.tool_calls and result.content:
+                break  # Valid response, do not make further tool calls
+
+            # If the LLM happens to return an empty response, re-prompt it
             if not result.tool_calls and (
                 not result.content
-                or isinstance(result.content, list)
-                and not result.content[0].get("text")
+                or (isinstance(result.content, list) and not result.content[0].get("text"))
             ):
                 messages = state["messages"] + [("user", "Respond with a real output.")]
                 state = {**state, "messages": messages}
@@ -88,7 +134,11 @@ class Assistant:
                 break
         return {"messages": result}
 
+
+
+
 llm = ChatGroq(
+
     model="llama-3.1-70b-versatile",  # Specify the model name
     temperature=1,             # Set the desired temperature
     max_tokens=7999,              # Define the maximum number of tokens
@@ -112,7 +162,7 @@ primary_assistant_prompt = ChatPromptTemplate.from_messages(
 ).partial(time=datetime.now)
 
 
-tools = [search_products]
+tools = [search_products,  add_to_cart, remove_from_cart, view_cart,checkout,get_payment_options,get_order_status,get_delivery_time] 
 assistant_runnable = primary_assistant_prompt | llm.bind_tools(tools)
 
 from langgraph.checkpoint.memory import MemorySaver

@@ -98,7 +98,7 @@ class Assistant:
 
             # If the LLM returns tool calls but has content, assume it's a valid response
             if result.tool_calls and result.content:
-                break  # Valid response, do not make further tool calls
+               break  # Valid response, do not make further tool calls
 
             # If the LLM happens to return an empty response, re-prompt it
             if not result.tool_calls and (
@@ -112,7 +112,7 @@ class Assistant:
         return {"messages": result}
 # Initialize the Language Model
 llm = ChatGroq(
-    model="llama-3.1-8b-instant",  # Specify the model name
+    model="llama-3.2-90b-text-preview",  # Specify the model name
     temperature=1,                     # Set the desired temperature
     max_tokens=7999,                # Define the maximum number of tokens
     timeout=10,                        # Set a timeout in seconds
@@ -123,21 +123,12 @@ llm = ChatGroq(
 primary_assistant_prompt = ChatPromptTemplate.from_messages(
     [
         (
-    "system",
-    "You are a helpful and proactive Amazon shopping assistant."
-    " Your main tasks are to answer product-related queries, suggest related or alternative products, manage the shopping cart, and assist with checkout and order inquiries."
-    "\n\nProduct Search and Recommendations:\n"
-    "  - Answer questions about product specifications, price, and availability.\n"
-    "  - Provide recommendations for related or alternative products based on user interests.\n"
-    "  - If an initial search doesn’t yield results, try expanding the query to help the user find what they need.\n"
-    "\nCart Management:\n"
-    "  - Allow users to add or remove items from their cart during the conversation.\n"
-    "  - Confirm each cart action and provide the user with updates on the items in their cart.\n"
-    "\nOrder and Purchase Queries:\n"
-    "  - Respond to questions about checkout, estimated delivery times, payment options, and order statuses.\n"
-    "  - Guide users through the checkout process, making sure they understand each step.\n"
-    "\n\nCurrent user:\n<User>\n{user_info}\n</User>"
-    "\nCurrent time: {time}.",
+  "system",
+            "You are a helpful Amazon shopping assistant."
+            " Use the provided tools to search for products, manage the shopping cart, and assist with other user orders and purchase queries."
+            " When searching, be persistent. Expand your query bounds if the first search returns no results."
+            "\n\nCurrent user:\n<User>\n{user_info}\n</User>"
+            "\nCurrent time: {time}.",
 ),
 ("placeholder", "{messages}"),
     ]

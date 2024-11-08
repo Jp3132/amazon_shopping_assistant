@@ -260,7 +260,7 @@ def search_products(
     if max_rating is not None:
         query += " AND rating <= %s"
         params.append(max_rating)
-    query += " LIMIT 2"
+    query += " LIMIT 3"
 
     try:
         with psycopg2.connect(**db_config) as conn:
@@ -274,7 +274,7 @@ def search_products(
 
                 # Format the results into a readable string
                 product_list = "\n\n".join([
-                    f"{i+1}. {row[0]}\n   Price: ₹{row[1]} (Discounted), ₹{row[2]} (Actual)\n   Rating: {row[3]}, product_id: {row[4]}"
+                    f"{i+1}. {row[0]}\n   Price: ₹{row[1]} (Discounted), ₹{row[2]} (Actual)\n   Rating: {row[3]}, Product_id: {row[4]}"
                     for i, row in enumerate(results)
                 ])
                 return product_list
@@ -287,7 +287,6 @@ def search_products(
         # Handle other potential errors
         print(f"An unexpected error occurred: {e}")
         return "An unexpected error occurred while processing your request."
-    
 
 
 def add_to_cart(product_id: str, product_name: str, discounted_price: float, quantity: int = 1) -> str:
@@ -315,7 +314,7 @@ def add_to_cart(product_id: str, product_name: str, discounted_price: float, qua
 
 
     
-def remove_from_cart(product_id: int, quantity: Optional[int] = None) -> str:
+def remove_from_cart(product_id: str, quantity: Optional[int] = None) -> str:
     """
     Removes a product or specified quantity from the shopping cart.
 
@@ -429,11 +428,11 @@ def checkout(user_id: int) -> str:
                     order_id = cursor.fetchone()[0]  # Fetch the order ID for confirmation
 
                 conn.commit()
-
+        sum_1 = sum(item['discounted_price'] * item['quantity'] for item in cart.values())
         # Clear the cart after checkout
         cart.clear()
 
-        return (f"Order(s) have been placed successfully with a total of ₹{sum(item['discounted_price'] * item['quantity'] for item in cart.values()):.2f}. "
+        return (f"Order(s) have been placed successfully with a total of ₹{sum_1:.2f}. "
                 f"All items are now being processed and will be delivered by {delivery_date.strftime('%Y-%m-%d')}.")
     
     except Exception as e:

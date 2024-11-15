@@ -1,31 +1,28 @@
 Amazon Shopping Assistant CLI
 
-Welcome to the Amazon Shopping Assistant CLI, a command-line interface that simulates an Amazon shopping experience. This assistant allows users to search for products, manage a shopping cart, check out, and inquire about orders using natural language. The assistant leverages an LLM (Language Model) to interpret user inputs and provides responses accordingly.
+An Amazon-like shopping assistant that allows users to search for products, manage their shopping cart, and place orders via a command-line interface, using a language model to handle user interactions.
 
-Table of Contents
+Description
 
-	•	Features
-	•	Prerequisites
-	•	Installation
-	•	Configuration
-	•	Database Setup
-	•	Running the Assistant
-	•	Usage
-	•	Example Conversation
-	•	Troubleshooting
-	•	License
+This project implements a command-line interface (CLI) for an Amazon Shopping Assistant. Users can interact with the assistant to search for products, add or remove items from their cart, view the cart, and proceed to checkout. The assistant uses a language model to interpret user inputs and provide appropriate responses, leveraging tools to perform actions such as database queries and cart management.
+
+The assistant is built using langchain, langgraph, and groq, and connects to a PostgreSQL database to retrieve product information and manage orders.
 
 Features
 
-	•	Natural Language Interaction: Communicate with the assistant using plain English.
-	•	Product Search: Search for products by name, category, price range, and rating.
-	•	Shopping Cart Management: Add to cart, remove from cart, and view cart contents.
-	•	Order Processing: Checkout and create orders.
-	•	Order Inquiries: Get order status and estimated delivery times.
-	•	Payment Options: Inquire about available payment methods.
+	•	Search for products by name, category, price range, and rating.
+	•	Add products to the shopping cart.
+	•	Remove products from the shopping cart.
+	•	View the contents of the shopping cart.
+	•	Checkout and place orders.
+	•	Get payment options.
+	•	Check order status.
+	•	Get estimated delivery times.
+
+Installation
 
 Prerequisites
 
-	•	Python 3.8 or higher
-	•	PostgreSQL database
-	•	Virtual Environment tool (optional but recommended)
+	•	Python 3.7 or higher
+	•	PostgreSQL database with the necessary tables and data
+	•	Git (to clone the repository)

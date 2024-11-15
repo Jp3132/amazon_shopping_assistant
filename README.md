@@ -62,12 +62,23 @@ Screenshots documenting the assistant's interactions and key functionalities are
 ---
 
 ## Steps to Run
+## Environment Setup
 
-1. **Install PostgreSQL**:
+1. Create a `.env` file in the project root directory with the following content:
+
+   ```plaintext
+   DB_HOST = <Your_Database_Host>
+   DB_PORT = <Your_Database_Port>
+   DB_DATABASE = <Your_Database_Name>
+   DB_USER = <Your_Database_Username>
+   DB_PASSWORD = <Your_Database_Password>
+   GROQ_API_KEY = <Your_Groq_API_Key>
+
+2. **Install PostgreSQL**:
    - Ensure PostgreSQL is installed on your system.
    - For installation, visit the [PostgreSQL official site](https://www.postgresql.org/download/).
 
-2. **Database Setup**:
+3. **Database Setup**:
    - Make sure you have the following information ready:
      - **Database Host**: `DB_HOST`
      - **Database Port**: `DB_PORT`
@@ -75,7 +86,7 @@ Screenshots documenting the assistant's interactions and key functionalities are
      - **Username**: `DB_USER`
      - **Password**: `DB_PASSWORD`
 
-3. **Log in to PostgreSQL**:
+4. **Log in to PostgreSQL**:
    Open a terminal and connect to PostgreSQL as the desired user. For example:
    ```bash
    psql -U <username>
@@ -83,7 +94,7 @@ Screenshots documenting the assistant's interactions and key functionalities are
 
    Replace `<username>` with your PostgreSQL username.
 
-4. **Create a New Database**:
+5. **Create a New Database**:
    Create the database where you will restore the backup:
    ```sql
    CREATE DATABASE <database_name>;
@@ -91,13 +102,13 @@ Screenshots documenting the assistant's interactions and key functionalities are
 
    Replace `<database_name>` with the desired database name.
 
-5. **Exit PostgreSQL**:
+6. **Exit PostgreSQL**:
    Type `\q` to exit the PostgreSQL shell:
    ```bash
    \q
    ```
 
-6. **Restore the Backup**:
+7. **Restore the Backup**:
    Use the `psql` command-line tool to restore the backup from the `backup.sql` file:
    ```bash
    psql -U <username> -d <database_name> -f backup.sql
@@ -108,28 +119,28 @@ Screenshots documenting the assistant's interactions and key functionalities are
    - `<database_name>`: The name of the database created in step 2.
    - `backup.sql`: Path to the provided SQL backup file.
 
-7. **Install Dependencies**:
-   - Run the following command to install all dependencies:
+8. **Install Dependencies**:
+  - Run the following command to install all dependencies:
      ```bash
      pip install -r requirements.txt
      ```
    - *(The `requirements.txt` file includes all necessary packages, including `langchain`, `langchain-groq`, `langgraph`, `python-dotenv`, and `groq`.)*
 
-8. **Run the Assistant**:
+9. **Run the Assistant**:
    - Start the assistant by executing:
      ```bash
      python main.py
      ```
 
-9. **Interact with the Assistant**:
+10. **Interact with the Assistant**:
    - Enter shopping-related queries to initiate conversations with the assistant.
    - Example query: `"Hi, I am looking for a gaming monitor"` will prompt the assistant to display available mugs.
 
-10. **Cart Management**:
+11. **Cart Management**:
    - Select a product type, and then ask the assistant to add it to the cart.
    - The assistant provides real-time cart updates, allowing users to view, modify, or remove items from the cart as needed.
 
-11. **Checkout and Order Support**:
+12. **Checkout and Order Support**:
    - Proceed with checkout options, including reviewing cart items, modifying quantities, and finalizing the purchase.
    - The assistant also responds to order-related questions, including delivery status, payment methods, and estimated arrival times.
 

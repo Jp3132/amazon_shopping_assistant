@@ -76,7 +76,7 @@ class Assistant:
     
 # Initialize the Language Model
 llm = ChatGroq(
-    model="llama-3.2-90b-text-preview",  # Specify the model name
+    model="llama-3.1-70b-versatile",  # Specify the model name
     temperature=1,                     # Set the desired temperature
     max_tokens=7999,                # Define the maximum number of tokens
     timeout=10,                        # Set a timeout in seconds

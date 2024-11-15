@@ -1,6 +1,6 @@
 # Shopping Cart Assistant Documentation
 
-This Shopping Cart Assistant, developed using the LangGraph framework, facilitates product search, recommendations, and shopping cart management in a conversational setting. The assistant integrates LangGraph’s tools for smooth and responsive interactions, allowing users to find products, manage their shopping cart, and inquire about order and purchase-related information.
+This Shopping Assistant, developed using the LangGraph framework, facilitates product search, recommendations, and shopping cart management in a conversational setting. The assistant integrates LangGraph’s tools for smooth and responsive interactions, allowing users to find products, manage their shopping cart, and inquire about order and purchase-related information.
 
 ## Requirements Implementation
 
@@ -52,9 +52,8 @@ This Shopping Cart Assistant, developed using the LangGraph framework, facilitat
    - The dataset was sourced from Kaggle, and pre-processing steps were applied to prepare it for use, including:
      - Removing rows with null values.
      - Modifying product title length for better readability, as the dataset initially only included descriptions.
-   - The data is stored in an SQLite database (`FullStackSQL.db`), included in the project directory.
-
-2. **Functionalities in `tools.py`**:
+   - The data is stored in an PostreSQL database.
+2. **Functionalities in `assistant_tools.py`**:
    - Key functionalities include:
      - `search_products`: Searches products based on user queries.
      - `add_to_cart`: Adds selected items to the cart.
@@ -86,7 +85,7 @@ Screenshots documenting the assistant's interactions and key functionalities are
 
 3. **Interact with the Assistant**:
    - Enter shopping-related queries to initiate conversations with the assistant.
-   - Example query: `"Hi, I am looking for a mug"` will prompt the assistant to display available mugs.
+   - Example query: `"Hi, I am looking for a gaming monitor"` will prompt the assistant to display available mugs.
 
 4. **Cart Management**:
    - Select a product type, and then ask the assistant to add it to the cart.

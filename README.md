@@ -1,13 +1,6 @@
-# Shopping Cart Assistant Documentation
+# Amazon_Shopping_Assistant 
 
 This Shopping Assistant, developed using the LangGraph framework, facilitates product search, recommendations, and shopping cart management in a conversational setting. The assistant integrates LangGraph’s tools for smooth and responsive interactions, allowing users to find products, manage their shopping cart, and inquire about order and purchase-related information.
-
-## Requirements Implementation
-
-### Project Setup and Framework Implementation
-
-1. **Project Setup**: The project setup followed the *LangGraph Customer Support Tutorial* for initial integration, adapting it specifically for shopping-related queries.
-2. **LangGraph Framework**: The assistant is built on the LangGraph framework, providing a flexible and powerful basis for handling shopping assistant capabilities with customized responses and workflows.
 
 ### Assistant Capabilities
 
@@ -70,15 +63,6 @@ Screenshots documenting the assistant's interactions and key functionalities are
 
 ## Steps to Run
 
-
-# Database Restoration Guide
-
-Follow these steps to restore the PostgreSQL database using the provided `backup.sql` file:
-
----
-
-## Prerequisites
-
 1. **Install PostgreSQL**:
    - Ensure PostgreSQL is installed on your system.
    - For installation, visit the [PostgreSQL official site](https://www.postgresql.org/download/).
@@ -91,11 +75,7 @@ Follow these steps to restore the PostgreSQL database using the provided `backup
      - **Username**: `DB_USER`
      - **Password**: `DB_PASSWORD`
 
----
-
-## Steps to Restore the Database
-
-1. **Log in to PostgreSQL**:
+3. **Log in to PostgreSQL**:
    Open a terminal and connect to PostgreSQL as the desired user. For example:
    ```bash
    psql -U <username>
@@ -103,7 +83,7 @@ Follow these steps to restore the PostgreSQL database using the provided `backup
 
    Replace `<username>` with your PostgreSQL username.
 
-2. **Create a New Database**:
+4. **Create a New Database**:
    Create the database where you will restore the backup:
    ```sql
    CREATE DATABASE <database_name>;
@@ -111,13 +91,13 @@ Follow these steps to restore the PostgreSQL database using the provided `backup
 
    Replace `<database_name>` with the desired database name.
 
-3. **Exit PostgreSQL**:
+5. **Exit PostgreSQL**:
    Type `\q` to exit the PostgreSQL shell:
    ```bash
    \q
    ```
 
-4. **Restore the Backup**:
+6. **Restore the Backup**:
    Use the `psql` command-line tool to restore the backup from the `backup.sql` file:
    ```bash
    psql -U <username> -d <database_name> -f backup.sql
@@ -128,31 +108,29 @@ Follow these steps to restore the PostgreSQL database using the provided `backup
    - `<database_name>`: The name of the database created in step 2.
    - `backup.sql`: Path to the provided SQL backup file.
 
-5. **Install Dependencies**:
+7. **Install Dependencies**:
    - Run the following command to install all dependencies:
      ```bash
      pip install -r requirements.txt
      ```
    - *(The `requirements.txt` file includes all necessary packages, including `langchain`, `langchain-groq`, `langgraph`, `python-dotenv`, and `groq`.)*
 
-6. **Run the Assistant**:
+8. **Run the Assistant**:
    - Start the assistant by executing:
      ```bash
      python main.py
      ```
 
-7. **Interact with the Assistant**:
+9. **Interact with the Assistant**:
    - Enter shopping-related queries to initiate conversations with the assistant.
    - Example query: `"Hi, I am looking for a gaming monitor"` will prompt the assistant to display available mugs.
 
-8. **Cart Management**:
+10. **Cart Management**:
    - Select a product type, and then ask the assistant to add it to the cart.
    - The assistant provides real-time cart updates, allowing users to view, modify, or remove items from the cart as needed.
 
-9. **Checkout and Order Support**:
+11. **Checkout and Order Support**:
    - Proceed with checkout options, including reviewing cart items, modifying quantities, and finalizing the purchase.
    - The assistant also responds to order-related questions, including delivery status, payment methods, and estimated arrival times.
 
----
 
-This documentation summarizes the Shopping Cart Assistant's functionality and setup, enabling seamless deployment and user engagement with shopping tasks.

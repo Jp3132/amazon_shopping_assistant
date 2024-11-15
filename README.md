@@ -70,28 +70,86 @@ Screenshots documenting the assistant's interactions and key functionalities are
 
 ## Steps to Run
 
-1. **Install Dependencies**:
+
+# Database Restoration Guide
+
+Follow these steps to restore the PostgreSQL database using the provided `backup.sql` file:
+
+---
+
+## Prerequisites
+
+1. **Install PostgreSQL**:
+   - Ensure PostgreSQL is installed on your system.
+   - For installation, visit the [PostgreSQL official site](https://www.postgresql.org/download/).
+
+2. **Database Setup**:
+   - Make sure you have the following information ready:
+     - **Database Host**: `DB_HOST`
+     - **Database Port**: `DB_PORT`
+     - **Database Name**: `DB_DATABASE`
+     - **Username**: `DB_USER`
+     - **Password**: `DB_PASSWORD`
+
+---
+
+## Steps to Restore the Database
+
+1. **Log in to PostgreSQL**:
+   Open a terminal and connect to PostgreSQL as the desired user. For example:
+   ```bash
+   psql -U <username>
+   ```
+
+   Replace `<username>` with your PostgreSQL username.
+
+2. **Create a New Database**:
+   Create the database where you will restore the backup:
+   ```sql
+   CREATE DATABASE <database_name>;
+   ```
+
+   Replace `<database_name>` with the desired database name.
+
+3. **Exit PostgreSQL**:
+   Type `\q` to exit the PostgreSQL shell:
+   ```bash
+   \q
+   ```
+
+4. **Restore the Backup**:
+   Use the `psql` command-line tool to restore the backup from the `backup.sql` file:
+   ```bash
+   psql -U <username> -d <database_name> -f backup.sql
+   ```
+
+   Replace:
+   - `<username>`: Your PostgreSQL username.
+   - `<database_name>`: The name of the database created in step 2.
+   - `backup.sql`: Path to the provided SQL backup file.
+
+5. **Install Dependencies**:
    - Run the following command to install all dependencies:
      ```bash
      pip install -r requirements.txt
      ```
    - *(The `requirements.txt` file includes all necessary packages, including `langchain`, `langchain-groq`, `langgraph`, `python-dotenv`, and `groq`.)*
 
-2. **Run the Assistant**:
+6. **Run the Assistant**:
    - Start the assistant by executing:
      ```bash
      python main.py
      ```
 
-3. **Interact with the Assistant**:
+7. **Interact with the Assistant**:
    - Enter shopping-related queries to initiate conversations with the assistant.
    - Example query: `"Hi, I am looking for a gaming monitor"` will prompt the assistant to display available mugs.
 
-4. **Cart Management**:
+8. **Cart Management**:
    - Select a product type, and then ask the assistant to add it to the cart.
    - The assistant provides real-time cart updates, allowing users to view, modify, or remove items from the cart as needed.
 
-5. **Checkout and Order Support**:
+9. **Checkout and Order Support**:
    - Proceed with checkout options, including reviewing cart items, modifying quantities, and finalizing the purchase.
    - The assistant also responds to order-related questions, including delivery status, payment methods, and estimated arrival times.
 

@@ -1,6 +1,6 @@
 # Amazon_Shopping_Assistant 
 
-This Shopping Assistant, developed using the LangGraph framework, facilitates product search, recommendations, and shopping cart management in a conversational setting. The assistant integrates LangGraph’s tools for smooth and responsive interactions, allowing users to find products, manage their shopping cart, and inquire about order and purchase-related information.
+This Shopping Assistant, developed using the LangGraph framework, facilitates product search, recommendations, and shopping cart management in a conversational setting. The assistant integrates LangGraph’s tools for smooth and responsive interactions, allowing users to find products, manage their shopping cart, and inquire about order and purchase-related information. also, tools are interacting with database in the backend for product search, order status, delivery time retrieval etc.
 
 ### Assistant Capabilities
 

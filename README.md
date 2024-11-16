@@ -5,7 +5,7 @@ This Shopping Assistant, developed using the LangGraph framework, facilitates pr
 ### Assistant Capabilities
 
 1. **Product Search and Recommendations**:
-   - The assistant responds to product-related inquiries, including product specifications, price, and availability.
+   - The assistant responds to product-related inquiries, including product specifications, price, and availability from database.
    - A recommendation system suggests related or alternative products based on user queries, enhancing the shopping experience with personalized options.
    
 2. **Cart Management**:
